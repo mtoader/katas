@@ -1,4 +1,4 @@
-name := "TreePaths"
+name := "trees"
 
 version := "1.0"
 
