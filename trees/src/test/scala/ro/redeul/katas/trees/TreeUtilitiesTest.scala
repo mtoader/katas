@@ -30,7 +30,7 @@ class TreeUtilitiesTest extends FeatureSpec with GivenWhenThen with Matchers {
         )
       )
 
-    Then("it should find a path of sum 7")
+    Then("it should 5 paths of sum 5")
     countPaths(t, 5) should be(5)
   }
 
@@ -52,7 +52,7 @@ class TreeUtilitiesTest extends FeatureSpec with GivenWhenThen with Matchers {
         )
       )
 
-    Then("it should find all the paths")
+    Then("it should enumerate 5 paths of sum 5")
     findPaths(t, 5) should be(Seq(Seq(2, 3), Seq(2, 3, 2, -2), Seq(2, 3, 2, -2), List(2, 3, 6, -6), Seq(2, 5, -2)))
   }
 
@@ -72,6 +72,6 @@ class TreeUtilitiesTest extends FeatureSpec with GivenWhenThen with Matchers {
       )
 
     Then("balancing should change the weights")
-    balanceTree(t, 5) should be(Some(new Tree(0)))
+    balanceTree(t, 5) should be(Some(new Tree(0, new Tree(34, new Tree(28), new Tree(2, new Tree(8), new Tree(8))), new Tree(100))))
   }
 }

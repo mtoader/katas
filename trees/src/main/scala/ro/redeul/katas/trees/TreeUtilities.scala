@@ -41,17 +41,18 @@ object TreeUtilities {
                 _balance(_r) map {
                   case (rWeight, rNode) =>
                     if (lWeight < rWeight)
-                      (rWeight, new Tree(rWeight, lNode.left, lNode.right), rNode)
+                      (rWeight, new Tree(lNode.data + (rWeight - lWeight), lNode.left, lNode.right), rNode)
                     else
-                      (lWeight, lNode, new Tree(lWeight, rNode.left, rNode.right))
+                      (lWeight, lNode, new Tree(rNode.data + (lWeight - rWeight), rNode.left, rNode.right))
                 }
             } map {
-              case (max, lNode, rNode) => w + 2 * (max + plateWeight) -> new Tree(w, lNode, rNode)
+              case (maxChildWeight, lNode, rNode) =>
+                w + 2 * (maxChildWeight + plateWeight) -> new Tree(w, lNode, rNode)
             }
+          case _ => None
         }
     }
-    _balance(t) map {
-      _._2
-    }
+
+    _balance(t) map { case (w, tree) => tree }
   }
 }
