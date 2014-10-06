@@ -1,5 +1,7 @@
 package ro.redeul.katas.trees
 
+import scala.annotation.tailrec
+
 object TreeUtilities {
 
   def countPaths(node: Tree, target: Int): Int = {
@@ -54,5 +56,31 @@ object TreeUtilities {
     }
 
     _balance(t) map { case (w, tree) => tree }
+  }
+
+  def traverse(node: Tree): Seq[Int] = {
+    node match {
+      case null => Nil
+      case Tree(data, left, right) => (traverse(left) :+ data) ++ traverse(right)
+    }
+  }
+
+  def nonRecursiveTraversal(node: Tree): Seq[Int] = {
+
+    @tailrec
+    def _traverse(node: Tree, pending: Seq[Tree], output: Seq[Int]): Seq[Int] = {
+      node match {
+        case Tree(d, null, null) =>
+          pending match {
+            case Nil => output :+ d
+            case h :: t => _traverse(h, t, output :+ d)
+          }
+
+        case Tree(d, null, r) => _traverse(r, pending, output :+ d)
+        case Tree(d, l, r) => _traverse(l, node.copy(left = null) +: pending, output)
+      }
+    }
+
+    _traverse(node, Seq(), Seq())
   }
 }
