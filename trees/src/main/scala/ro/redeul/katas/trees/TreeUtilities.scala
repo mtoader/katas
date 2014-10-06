@@ -68,16 +68,16 @@ object TreeUtilities {
   def nonRecursiveTraversal(node: Tree): Seq[Int] = {
 
     @tailrec
-    def _traverse(node: Tree, pending: Seq[Tree], output: Seq[Int]): Seq[Int] = {
+    def _traverse(node: Tree, queue: Seq[Tree], out: Seq[Int]): Seq[Int] = {
       node match {
         case Tree(d, null, null) =>
-          pending match {
-            case Nil => output :+ d
-            case h :: t => _traverse(h, t, output :+ d)
+          queue match {
+            case Nil => out :+ d
+            case h :: t => _traverse(h, t, out :+ d)
           }
 
-        case Tree(d, null, r) => _traverse(r, pending, output :+ d)
-        case Tree(d, l, r) => _traverse(l, node.copy(left = null) +: pending, output)
+        case Tree(d, null, r) => _traverse(r, queue, out :+ d)
+        case Tree(d, l, r) => _traverse(l, node.copy(left = null) +: queue, out)
       }
     }
 
